@@ -16,7 +16,7 @@ public class House {
     private double price;
     private int numberOfBedRoom;
     private int numberOfBathRoom;
-    private int status;
+
     //doanh thu
     private double revenue;
 
@@ -25,7 +25,7 @@ public class House {
     private Image image;
 
     @ManyToOne
-    @JoinColumn(name = "idHouseRoom")
-    private HouseRoom houseRoom;
+    @JoinColumn(name = "idStatus")
+    private Status status;
 
 }
