@@ -17,6 +17,8 @@ public class House {
     private int numberOfBedRoom;
     private int numberOfBathRoom;
     private int status;
+    //doanh thu
+    private double revenue;
 
     @ManyToOne
     @JoinColumn(name = "idImage")

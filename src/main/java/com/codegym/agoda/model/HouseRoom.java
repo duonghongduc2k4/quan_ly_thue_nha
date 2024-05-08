@@ -12,8 +12,7 @@ public class HouseRoom {
     private int id;
 
     private int numberOfRoom;
-    //doanh thu
-    private double revenue;
+
 
     @ManyToOne
     @JoinColumn(name = "idHouse")
