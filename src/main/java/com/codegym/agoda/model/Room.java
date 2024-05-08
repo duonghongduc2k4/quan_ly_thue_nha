@@ -15,5 +15,8 @@ public class Room {
     @JoinColumn(name = "idTypeRoom")
     private TypeRoom type;
 
+    @ManyToOne
+    @JoinColumn(name = "idHouseRoom")
+    private HouseRoom houseRoom;
 
 }

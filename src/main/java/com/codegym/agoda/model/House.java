@@ -16,5 +16,14 @@ public class House {
     private double price;
     private int numberOfBedRoom;
     private int numberOfBathRoom;
+    private int status;
+
+    @ManyToOne
+    @JoinColumn(name = "idImage")
+    private Image image;
+
+    @ManyToOne
+    @JoinColumn(name = "idHouseRoom")
+    private HouseRoom houseRoom;
 
 }

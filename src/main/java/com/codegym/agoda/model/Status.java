@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "Image")
+@Table(name = "status")
 @Data
-public class Image {
+public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nameImage;
-
+    private String name;
 }

@@ -11,7 +11,9 @@ public class HouseRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int  numberOfRoom;
+    private int numberOfRoom;
+    //doanh thu
+    private double revenue;
 
     @ManyToOne
     @JoinColumn(name = "idHouse")
