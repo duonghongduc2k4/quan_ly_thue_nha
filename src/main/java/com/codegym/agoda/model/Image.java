@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "Image")
+@Table(name = "image")
 @Data
 public class Image {
     @Id
@@ -12,4 +12,7 @@ public class Image {
     private int id;
     private String nameImage;
 
+    @ManyToOne
+    @JoinColumn(name = "id_house")
+    private House house;
 }

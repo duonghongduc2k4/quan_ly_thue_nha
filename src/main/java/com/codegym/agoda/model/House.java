@@ -3,6 +3,8 @@ package com.codegym.agoda.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "house")
 @Data
@@ -16,16 +18,16 @@ public class House {
     private double price;
     private int numberOfBedRoom;
     private int numberOfBathRoom;
-
     //doanh thu
     private double revenue;
 
-    @ManyToOne
-    @JoinColumn(name = "idImage")
-    private Image image;
+    @OneToMany(mappedBy = "house")
+    private List<HouseRoom> houseRooms;
 
-    @ManyToOne
-    @JoinColumn(name = "idStatus")
-    private Status status;
+    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
+    private List<Image> images;
+
+    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
+    private List<Status> statuses;
 
 }

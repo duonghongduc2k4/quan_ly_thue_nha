@@ -11,4 +11,8 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "id_house")
+    private House house;
 }

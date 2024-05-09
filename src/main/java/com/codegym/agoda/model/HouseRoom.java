@@ -15,11 +15,11 @@ public class HouseRoom {
 
 
     @ManyToOne
-    @JoinColumn(name = "idHouse")
+    @JoinColumn(name = "id_house")
     private House house;
 
     @ManyToOne
-    @JoinColumn(name = "idRoom")
+    @JoinColumn(name = "id_room")
     private Room room;
 
 
