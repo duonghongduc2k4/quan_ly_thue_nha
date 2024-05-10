@@ -14,10 +14,13 @@ public class Room {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "room")
-    private List<HouseRoom> houseRooms;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<TypeRoom> typeRooms;
+    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
+    private TypeRoom typeRoom;
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_house")
+    private House house;
 
 }

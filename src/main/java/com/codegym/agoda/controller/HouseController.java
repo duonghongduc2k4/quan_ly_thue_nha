@@ -1,15 +1,21 @@
 package com.codegym.agoda.controller;
 
+import com.codegym.agoda.dto.HouseDto;
 import com.codegym.agoda.dto.HouseSpec;
 import com.codegym.agoda.dto.PaginateRequest;
 import com.codegym.agoda.model.House;
+import com.codegym.agoda.model.Room;
+import com.codegym.agoda.model.TypeRoom;
+import com.codegym.agoda.repository.ITypeRoomRepo;
 import com.codegym.agoda.service.impl.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +24,15 @@ import java.util.Optional;
 public class HouseController {
     @Autowired
     private HouseService houseService;
+    @Autowired
+    private ITypeRoomRepo typeRoomRepo;
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<String> handleException(Exception e){
+        return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+
 
     @GetMapping
     public ResponseEntity<List<House>> listHouse(
@@ -40,5 +55,12 @@ public class HouseController {
         }
         return new ResponseEntity<>(customerOptional.get(), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/create")
+    private ResponseEntity<House> save(@ModelAttribute HouseDto houseDto) throws IOException {
+        House house = houseService.saveHouse(houseDto);
+        return new ResponseEntity<>(house, HttpStatus.CREATED);
+    }
+
 
 }
