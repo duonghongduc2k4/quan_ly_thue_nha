@@ -1,20 +1,19 @@
 package com.codegym.agoda.controller;
 
 import com.codegym.agoda.dto.HouseDto;
-import com.codegym.agoda.dto.HouseSpec;
 import com.codegym.agoda.dto.PaginateRequest;
 import com.codegym.agoda.model.House;
-import com.codegym.agoda.model.Room;
-import com.codegym.agoda.model.TypeRoom;
 import com.codegym.agoda.repository.ITypeRoomRepo;
 import com.codegym.agoda.service.impl.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +26,9 @@ public class HouseController {
     @Autowired
     private ITypeRoomRepo typeRoomRepo;
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<String> handleException(Exception e){
-        return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 
+    @Value("${file-upload}")
+    private String fileUpload;
 
     @GetMapping
     public ResponseEntity<List<House>> listHouse(
@@ -56,11 +52,23 @@ public class HouseController {
         return new ResponseEntity<>(customerOptional.get(), HttpStatus.OK);
     }
 
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> handleFileUpload(@RequestParam("files") MultipartFile[] files) {
+        try {
+            for (MultipartFile file : files) {
+                // Lưu trữ từng file vào thư mục cụ thể
+                file.transferTo(new File(fileUpload + file.getOriginalFilename()));
+            }
+            return ResponseEntity.ok("Files uploaded successfully");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload files");
+        }
+    }
     @PostMapping(value = "/create")
     private ResponseEntity<House> save(@ModelAttribute HouseDto houseDto) throws IOException {
         House house = houseService.saveHouse(houseDto);
         return new ResponseEntity<>(house, HttpStatus.CREATED);
     }
-
 
 }

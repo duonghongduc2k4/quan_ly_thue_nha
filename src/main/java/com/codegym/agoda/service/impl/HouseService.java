@@ -86,7 +86,7 @@ public class HouseService implements IHouseService {
         }
         if (houseDto.getImage() == null) {
             Image image = new Image();
-            image.setNameImage("upload/defaul.jpg");
+            image.setNameImage("upload/default.jpg");
             image.setHouse(house);
             iImageRepo.save(image);
         }
