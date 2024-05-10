@@ -22,7 +22,7 @@ public class HouseSpec implements Specification<House> {
         // chứa danh sách các điều kiện
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        if (!house.getName().isEmpty()) {
+        if (house.getName() != null) {
             predicateList.add(criteriaBuilder.like(root.get("name"),"%" + house.getName() + "%"));
         }
 

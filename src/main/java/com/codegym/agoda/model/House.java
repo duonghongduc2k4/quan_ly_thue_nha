@@ -21,13 +21,15 @@ public class House {
     //doanh thu
     private double revenue;
 
-    @OneToMany(mappedBy = "house")
-    private List<HouseRoom> houseRooms;
+    private int numberOfRoom;
 
-    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
-    private List<Image> images;
+
+    @OneToOne(mappedBy = "house", cascade = CascadeType.ALL)
+    private Image image;
 
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
     private List<Status> statuses;
+//    @OneToMany(mappedBy = "house_rooms",cascade = CascadeType.ALL)
+//    private HouseRoom houseRoom;
 
 }

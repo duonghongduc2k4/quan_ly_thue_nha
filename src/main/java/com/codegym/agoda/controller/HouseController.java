@@ -1,8 +1,9 @@
 package com.codegym.agoda.controller;
 
-import com.codegym.agoda.dto.HouseSpec;
+import com.codegym.agoda.dto.HouseDto;
 import com.codegym.agoda.dto.PaginateRequest;
 import com.codegym.agoda.model.House;
+import com.codegym.agoda.repository.ITypeRoomRepo;
 import com.codegym.agoda.service.impl.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,9 @@ import java.util.Optional;
 public class HouseController {
     @Autowired
     private HouseService houseService;
+    @Autowired
+    private ITypeRoomRepo typeRoomRepo;
+
 
     @Value("${file-upload}")
     private String fileUpload;
@@ -60,6 +64,11 @@ public class HouseController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload files");
         }
+    }
+    @PostMapping(value = "/create")
+    private ResponseEntity<House> save(@ModelAttribute HouseDto houseDto) throws IOException {
+        House house = houseService.saveHouse(houseDto);
+        return new ResponseEntity<>(house, HttpStatus.CREATED);
     }
 
 }

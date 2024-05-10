@@ -12,7 +12,7 @@ public class TypeRoom {
     private int id;
     private String name;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_room")
     private Room room;
 }
