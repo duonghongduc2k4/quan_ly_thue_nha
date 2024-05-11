@@ -7,6 +7,7 @@ import com.codegym.agoda.dto.RoomDto;
 import com.codegym.agoda.model.House;
 import com.codegym.agoda.model.Image;
 import com.codegym.agoda.model.Room;
+import com.codegym.agoda.model.TypeRoom;
 import com.codegym.agoda.repository.IHouseRepository;
 import com.codegym.agoda.repository.IImageRepo;
 import com.codegym.agoda.repository.IRoomRepo;
@@ -74,10 +75,12 @@ public class HouseService implements IHouseService {
         //them nha
         House house = iHouseRepository.save(houseDto.toHouse());
 
-
         //them phong
         for (RoomDto roomDto : houseDto.getRooms()) {
             Room room = new Room();
+            if (roomDto.getId() != 0) {
+                room.setId(iTypeRoomRepo.findById(roomDto.getTypeId()).get().getId());
+            }
             room.setName(roomDto.getName());
 //            lấy id thằng typeRoom
             room.setTypeRoom(iTypeRoomRepo.findById(roomDto.getTypeId()).get());
@@ -95,7 +98,10 @@ public class HouseService implements IHouseService {
         FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + filename));
         Image image = new Image();
         image.setNameImage(filename);
-        image.setHouse(house);
+        if (image.getId() == 0) {
+            image.setHouse(house);
+        }
+        image.setId(houseDto.getId());
         iImageRepo.save(image);
         return house;
     }
