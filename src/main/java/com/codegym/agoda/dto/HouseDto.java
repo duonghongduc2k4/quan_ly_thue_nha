@@ -43,6 +43,7 @@ public class HouseDto {
 
     public House toHouse() {
         House house = new House();
+        house.setId(id);
         house.setName(name);
         house.setAddress(address);
         house.setDescription(description);

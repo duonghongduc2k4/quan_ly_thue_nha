@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController("apiHouseController")
 @RequestMapping("/api/house")
+@CrossOrigin
 public class HouseController {
     @Autowired
     private HouseService houseService;
@@ -66,9 +67,26 @@ public class HouseController {
         }
     }
     @PostMapping(value = "/create")
-    private ResponseEntity<House> save(@ModelAttribute HouseDto houseDto) throws IOException {
+    public ResponseEntity<House> save(@ModelAttribute HouseDto houseDto) throws IOException {
         House house = houseService.saveHouse(houseDto);
         return new ResponseEntity<>(house, HttpStatus.CREATED);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<House> update(@ModelAttribute HouseDto dto, @PathVariable int id) throws IOException {
+        if (houseService.findById(id).isPresent()) {
+            House house = houseService.findById(id).get();
+            house.setName(dto.getName());
+            house.setAddress(dto.getAddress());
+            house.setDescription(dto.getDescription());
+            house.setRevenue(dto.getRevenue());
+            house.setPrice(dto.getPrice());
+            house.setNumberOfBedRoom(dto.getNumberOfBedRoom());
+            house.setNumberOfBathRoom(dto.getNumberOfBathRoom());
+            return new ResponseEntity<>(houseService.saveHouse(dto), HttpStatus.OK);
+
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 }
