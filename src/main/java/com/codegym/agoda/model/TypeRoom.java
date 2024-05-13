@@ -1,5 +1,6 @@
 package com.codegym.agoda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,5 +15,6 @@ public class TypeRoom {
 
     @OneToOne
     @JoinColumn(name = "id_room")
+    @JsonIgnore
     private Room room;
 }

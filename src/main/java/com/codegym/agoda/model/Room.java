@@ -15,7 +15,7 @@ public class Room {
     private String name;
 
 
-    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "room")
     private TypeRoom typeRoom;
 
 

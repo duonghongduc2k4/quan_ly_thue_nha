@@ -89,7 +89,7 @@ public class HouseService implements IHouseService {
         }
         if (houseDto.getImage() == null) {
             Image image = new Image();
-            image.setNameImage("upload/default.jpg");
+            image.setNameImage("img/default.jpg");
             image.setHouse(house);
             iImageRepo.save(image);
         }
@@ -97,7 +97,7 @@ public class HouseService implements IHouseService {
         String filename = multipartFile.getOriginalFilename();
         FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + filename));
         Image image = new Image();
-        image.setNameImage(filename);
+        image.setNameImage("img/" + filename);
         if (image.getId() == 0) {
             image.setHouse(house);
         }

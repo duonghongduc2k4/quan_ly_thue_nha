@@ -3,8 +3,10 @@ package com.codegym.agoda.controller;
 import com.codegym.agoda.dto.HouseDto;
 import com.codegym.agoda.dto.PaginateRequest;
 import com.codegym.agoda.model.House;
+import com.codegym.agoda.model.TypeRoom;
 import com.codegym.agoda.repository.ITypeRoomRepo;
 import com.codegym.agoda.service.impl.HouseService;
+import com.codegym.agoda.service.impl.TypeRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,8 +26,6 @@ import java.util.Optional;
 public class HouseController {
     @Autowired
     private HouseService houseService;
-    @Autowired
-    private ITypeRoomRepo typeRoomRepo;
 
 
     @Value("${file-upload}")
@@ -53,7 +53,6 @@ public class HouseController {
         return new ResponseEntity<>(customerOptional.get(), HttpStatus.OK);
     }
 
-
     @PostMapping("/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam("files") MultipartFile[] files) {
         try {
@@ -66,7 +65,7 @@ public class HouseController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload files");
         }
     }
-    @PostMapping(value = "/create")
+    @PostMapping()
     public ResponseEntity<House> save(@ModelAttribute HouseDto houseDto) throws IOException {
         House house = houseService.saveHouse(houseDto);
         return new ResponseEntity<>(house, HttpStatus.CREATED);
@@ -83,7 +82,6 @@ public class HouseController {
             house.setNumberOfBedRoom(dto.getNumberOfBedRoom());
             house.setNumberOfBathRoom(dto.getNumberOfBathRoom());
             return new ResponseEntity<>(houseService.saveHouse(dto), HttpStatus.OK);
-
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
