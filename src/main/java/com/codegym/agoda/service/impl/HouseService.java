@@ -37,8 +37,6 @@ public class HouseService implements IHouseService {
     private ITypeRoomRepo iTypeRoomRepo;
     @Autowired
     private IImageRepo iImageRepo;
-    @Autowired
-    private HouseRoomService houseRoomService;
 
     @Value("${file-upload}")
     private String fileUpload;

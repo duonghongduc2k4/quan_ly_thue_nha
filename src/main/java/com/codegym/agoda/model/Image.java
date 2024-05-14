@@ -13,7 +13,7 @@ public class Image {
     private int id;
     private String nameImage;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_house")
     @JsonIgnore
     private House house;
