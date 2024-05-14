@@ -1,5 +1,6 @@
 package com.codegym.agoda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,10 +15,8 @@ public class Room {
     private int id;
     private String name;
 
-
-    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "room")
     private TypeRoom typeRoom;
-
 
     @ManyToOne
     @JoinColumn(name = "id_house")

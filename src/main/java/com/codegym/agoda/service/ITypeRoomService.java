@@ -6,8 +6,8 @@ import com.codegym.agoda.repository.IRoomRepo;
 
 import java.util.List;
 
-public interface ITypeRoomService extends IGenerateService<Room> {
-    List<TypeRoom> findAllType();
+public interface ITypeRoomService extends IGenerateService<TypeRoom> {
+//    List<TypeRoom> findAllType();
 
 
 }

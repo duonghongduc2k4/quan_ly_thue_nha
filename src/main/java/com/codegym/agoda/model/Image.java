@@ -1,5 +1,6 @@
 package com.codegym.agoda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,7 +13,8 @@ public class Image {
     private int id;
     private String nameImage;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_house")
+    @JsonIgnore
     private House house;
 }

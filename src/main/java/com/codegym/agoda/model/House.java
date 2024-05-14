@@ -24,12 +24,18 @@ public class House {
     private int numberOfRoom;
 
 
-    @OneToOne(mappedBy = "house", cascade = CascadeType.ALL)
-    private Image image;
+    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
+    private List<Image> images;
 
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
-    private List<Status> statuses;
-//    @OneToMany(mappedBy = "house_rooms",cascade = CascadeType.ALL)
-//    private HouseRoom houseRoom;
+    private List<Room> rooms;
+
+    @OneToOne(mappedBy = "house", cascade = CascadeType.ALL)
+    private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "id_account")
+    private Account account;
+
 
 }

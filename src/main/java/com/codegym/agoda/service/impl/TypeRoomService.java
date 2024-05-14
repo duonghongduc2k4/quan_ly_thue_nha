@@ -13,27 +13,24 @@ import java.util.Optional;
 public class TypeRoomService implements ITypeRoomService {
     @Autowired
     private ITypeRoomRepo iTypeRoomRepo;
+
     @Override
-    public Iterable<Room> findAll() {
-        return null;
+    public Iterable<TypeRoom> findAll() {
+        return iTypeRoomRepo.findAll();
     }
 
     @Override
-    public Optional<Room> findById(int id) {
+    public Optional<TypeRoom> findById(int id) {
         return Optional.empty();
     }
 
     @Override
-    public Room save(Room room) {
+    public TypeRoom save(TypeRoom typeRoom) {
         return null;
     }
 
     @Override
     public void delete(int id) {
-    }
 
-    @Override
-    public List<TypeRoom> findAllType() {
-        return iTypeRoomRepo.findAllType();
     }
 }
