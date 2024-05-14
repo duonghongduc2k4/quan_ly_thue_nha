@@ -33,6 +33,8 @@ public class HouseService implements IHouseService {
     private IImageRepo iImageRepo;
     @Autowired
     private IAccountRepo iAccountRepo;
+    @Autowired
+    private IStatusRepo iStatusRepo;
 
     @Value("${file-upload}")
     private String fileUpload;
@@ -70,69 +72,38 @@ public class HouseService implements IHouseService {
 // them nha
         House house = houseDto.toHouse();
         house.setAccount(iAccountRepo.findById(houseDto.getAccountId()).get());
+        house.setStatus(iStatusRepo.findById(3).get());
         house = iHouseRepository.save(house);
 
         //them phong
         for (RoomDto roomDto : houseDto.getRooms()) {
             Room room = new Room();
+            if (roomDto.getId() != 0) {
+                room.setId(iTypeRoomRepo.findById(roomDto.getTypeId()).get().getId());
+            }
             room.setName(roomDto.getName());
 //            lấy id thằng typeRoom
             room.setTypeRoom(iTypeRoomRepo.findById(roomDto.getTypeId()).get());
             room.setHouse(house);
             iRoomRepo.save(room);
         }
-
+        if (houseDto.getId() != 0) {
+            iImageRepo.deleteById(house.getId());
+        }
         if (houseDto.getImage() == null) {
             Image image = new Image();
-            image.setNameImage("upload/defaul.jpg");
+            image.setNameImage("upload/default.jpg");
             image.setHouse(house);
             iImageRepo.save(image);
         }
         MultipartFile multipartFile = houseDto.getImage();
         String filename = multipartFile.getOriginalFilename();
         FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + filename));
+
         Image image = new Image();
         image.setNameImage(filename);
         image.setHouse(house);
         iImageRepo.save(image);
         return house;
     }
-
-//    @Override
-//    public House saveHouse(HouseDto houseDto) throws IOException {
-//        //them nha
-//        House house = iHouseRepository.save(houseDto.toHouse());
-//
-//        //them phong
-//        for (RoomDto roomDto : houseDto.getRooms()) {
-//            Room room = new Room();
-//            if (roomDto.getId() != 0) {
-//                room.setId(iTypeRoomRepo.findById(roomDto.getTypeId()).get().getId());
-//            }
-//            room.setName(roomDto.getName());
-////            lấy id thằng typeRoom
-//            room.setTypeRoom(iTypeRoomRepo.findById(roomDto.getTypeId()).get());
-//            room.setHouse(house);
-//            iRoomRepo.save(room);
-//        }
-//        if (houseDto.getImage() == null) {
-//            Image image = new Image();
-//            image.setNameImage("img/default.jpg");
-//            image.setHouse(house);
-//            iImageRepo.save(image);
-//        }
-//        MultipartFile multipartFile = houseDto.getImage();
-//        String filename = multipartFile.getOriginalFilename();
-//        FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + filename));
-//        Image image = new Image();
-//        image.setNameImage("img/" + filename);
-//        if (image.getId() == 0) {
-//            image.setHouse(house);
-//        }
-//        image.setId(houseDto.getId());
-//        iImageRepo.save(image);
-//        return house;
-//    }
-
-
 }

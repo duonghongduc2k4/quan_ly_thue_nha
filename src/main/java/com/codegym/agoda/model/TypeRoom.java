@@ -13,5 +13,4 @@ public class TypeRoom {
     private int id;
     private String name;
 
-
 }

@@ -26,6 +26,7 @@ public class HouseDto {
 
     private int accountId;
 
+
     public int getAccountId() {
         return accountId;
     }

@@ -12,7 +12,4 @@ public class Status {
     private int id;
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "id_house")
-    private House house;
 }

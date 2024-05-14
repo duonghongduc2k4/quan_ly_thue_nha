@@ -21,5 +21,6 @@ public class Room {
 
     @ManyToOne
     @JoinColumn(name = "id_house")
+    @JsonIgnore
     private House house;
 }
