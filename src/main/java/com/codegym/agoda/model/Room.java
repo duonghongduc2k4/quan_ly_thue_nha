@@ -15,11 +15,11 @@ public class Room {
     private int id;
     private String name;
 
-    @OneToOne(mappedBy = "room")
+
+    @ManyToOne
     private TypeRoom typeRoom;
 
     @ManyToOne
     @JoinColumn(name = "id_house")
     private House house;
-
 }

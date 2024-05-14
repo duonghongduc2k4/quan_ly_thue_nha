@@ -24,8 +24,8 @@ public class House {
     private int numberOfRoom;
 
 
-    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
-    private List<Image> images;
+//    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
+//    private List<Image> images;
 
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
     private List<Room> rooms;

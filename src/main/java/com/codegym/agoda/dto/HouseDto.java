@@ -1,14 +1,18 @@
 package com.codegym.agoda.dto;
 
+import com.codegym.agoda.model.Account;
 import com.codegym.agoda.model.House;
 import com.codegym.agoda.model.Room;
 import com.codegym.agoda.model.TypeRoom;
+import com.codegym.agoda.repository.IAccountRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
 
 public class HouseDto {
+
     private int id;
     private String name;
     private String address;
@@ -20,6 +24,16 @@ public class HouseDto {
     private List<RoomDto> rooms;
     private double revenue;
 
+    private int accountId;
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
     private MultipartFile image;
 
     public MultipartFile getImage() {
@@ -30,7 +44,7 @@ public class HouseDto {
         this.image = image;
     }
 
-    public List<RoomDto> getRooms() {
+    public List<RoomDto>getRooms() {
         return rooms;
     }
 

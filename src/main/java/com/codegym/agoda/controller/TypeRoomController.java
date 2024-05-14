@@ -12,7 +12,7 @@ import java.util.List;
 @RestController("apiTypeRoomController")
 @RequestMapping("/api/type-room")
 @CrossOrigin
-public class TypeRoomController {
+public class    TypeRoomController {
     @Autowired
     private TypeRoomService typeRoomService;
 

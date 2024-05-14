@@ -13,8 +13,5 @@ public class TypeRoom {
     private int id;
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "id_room")
-    @JsonIgnore
-    private Room room;
+
 }

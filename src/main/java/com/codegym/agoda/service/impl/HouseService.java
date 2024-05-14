@@ -4,14 +4,8 @@ import com.codegym.agoda.dto.HouseDto;
 import com.codegym.agoda.dto.HouseSpec;
 import com.codegym.agoda.dto.PaginateRequest;
 import com.codegym.agoda.dto.RoomDto;
-import com.codegym.agoda.model.House;
-import com.codegym.agoda.model.Image;
-import com.codegym.agoda.model.Room;
-import com.codegym.agoda.model.TypeRoom;
-import com.codegym.agoda.repository.IHouseRepository;
-import com.codegym.agoda.repository.IImageRepo;
-import com.codegym.agoda.repository.IRoomRepo;
-import com.codegym.agoda.repository.ITypeRoomRepo;
+import com.codegym.agoda.model.*;
+import com.codegym.agoda.repository.*;
 import com.codegym.agoda.service.IHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +31,8 @@ public class HouseService implements IHouseService {
     private ITypeRoomRepo iTypeRoomRepo;
     @Autowired
     private IImageRepo iImageRepo;
+    @Autowired
+    private IAccountRepo iAccountRepo;
 
     @Value("${file-upload}")
     private String fileUpload;
@@ -67,27 +63,28 @@ public class HouseService implements IHouseService {
         Pageable pageable = PageRequest.of(paginateRequest.getPage(), paginateRequest.getSize());
         return iHouseRepository.findAll(specification, pageable);
     }
-
     @Override
     public House saveHouse(HouseDto houseDto) throws IOException {
-        //them nha
-        House house = iHouseRepository.save(houseDto.toHouse());
+//        them thang nguoi dang nha
+
+// them nha
+        House house = houseDto.toHouse();
+        house.setAccount(iAccountRepo.findById(houseDto.getAccountId()).get());
+        house = iHouseRepository.save(house);
 
         //them phong
         for (RoomDto roomDto : houseDto.getRooms()) {
             Room room = new Room();
-            if (roomDto.getId() != 0) {
-                room.setId(iTypeRoomRepo.findById(roomDto.getTypeId()).get().getId());
-            }
             room.setName(roomDto.getName());
 //            lấy id thằng typeRoom
             room.setTypeRoom(iTypeRoomRepo.findById(roomDto.getTypeId()).get());
             room.setHouse(house);
             iRoomRepo.save(room);
         }
+
         if (houseDto.getImage() == null) {
             Image image = new Image();
-            image.setNameImage("img/default.jpg");
+            image.setNameImage("upload/defaul.jpg");
             image.setHouse(house);
             iImageRepo.save(image);
         }
@@ -95,14 +92,47 @@ public class HouseService implements IHouseService {
         String filename = multipartFile.getOriginalFilename();
         FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + filename));
         Image image = new Image();
-        image.setNameImage("img/" + filename);
-        if (image.getId() == 0) {
-            image.setHouse(house);
-        }
-        image.setId(houseDto.getId());
+        image.setNameImage(filename);
+        image.setHouse(house);
         iImageRepo.save(image);
         return house;
     }
+
+//    @Override
+//    public House saveHouse(HouseDto houseDto) throws IOException {
+//        //them nha
+//        House house = iHouseRepository.save(houseDto.toHouse());
+//
+//        //them phong
+//        for (RoomDto roomDto : houseDto.getRooms()) {
+//            Room room = new Room();
+//            if (roomDto.getId() != 0) {
+//                room.setId(iTypeRoomRepo.findById(roomDto.getTypeId()).get().getId());
+//            }
+//            room.setName(roomDto.getName());
+////            lấy id thằng typeRoom
+//            room.setTypeRoom(iTypeRoomRepo.findById(roomDto.getTypeId()).get());
+//            room.setHouse(house);
+//            iRoomRepo.save(room);
+//        }
+//        if (houseDto.getImage() == null) {
+//            Image image = new Image();
+//            image.setNameImage("img/default.jpg");
+//            image.setHouse(house);
+//            iImageRepo.save(image);
+//        }
+//        MultipartFile multipartFile = houseDto.getImage();
+//        String filename = multipartFile.getOriginalFilename();
+//        FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + filename));
+//        Image image = new Image();
+//        image.setNameImage("img/" + filename);
+//        if (image.getId() == 0) {
+//            image.setHouse(house);
+//        }
+//        image.setId(houseDto.getId());
+//        iImageRepo.save(image);
+//        return house;
+//    }
 
 
 }
