@@ -7,6 +7,7 @@ import com.codegym.agoda.dto.RoomDto;
 import com.codegym.agoda.model.*;
 import com.codegym.agoda.repository.*;
 import com.codegym.agoda.service.IHouseService;
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -65,6 +66,7 @@ public class HouseService implements IHouseService {
         Pageable pageable = PageRequest.of(paginateRequest.getPage(), paginateRequest.getSize());
         return iHouseRepository.findAll(specification, pageable);
     }
+
     @Override
     public House saveHouse(HouseDto houseDto) throws IOException {
 //        them thang nguoi dang nha
@@ -76,10 +78,14 @@ public class HouseService implements IHouseService {
         house = iHouseRepository.save(house);
 
         //them phong
+
         for (RoomDto roomDto : houseDto.getRooms()) {
             Room room = new Room();
-            if (roomDto.getId() != 0) {
-                room.setId(iTypeRoomRepo.findById(roomDto.getTypeId()).get().getId());
+            if (houseDto.getId() != 0) {
+                Iterable<Room> roomList = iRoomRepo.findAllByIdHouse(houseDto.getId());
+                for (Room room1 : roomList) {
+                    iRoomRepo.deleteById(room1.getId());
+                }
             }
             room.setName(roomDto.getName());
 //            lấy id thằng typeRoom
@@ -88,7 +94,8 @@ public class HouseService implements IHouseService {
             iRoomRepo.save(room);
         }
         if (houseDto.getId() != 0) {
-            iImageRepo.deleteById(house.getId());
+            Image image = iImageRepo.findByIdHouse(houseDto.getId()).get();
+            iImageRepo.deleteById(image.getId());
         }
         if (houseDto.getImage() == null) {
             Image image = new Image();

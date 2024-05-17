@@ -45,7 +45,7 @@ public class HouseDto {
         this.image = image;
     }
 
-    public List<RoomDto>getRooms() {
+    public List<RoomDto> getRooms() {
         return rooms;
     }
 

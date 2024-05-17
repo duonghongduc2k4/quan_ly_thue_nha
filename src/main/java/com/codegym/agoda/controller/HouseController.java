@@ -35,7 +35,7 @@ public class HouseController {
     public ResponseEntity<List<House>> listHouse(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "5") int size
+            @RequestParam(name = "size", required = false, defaultValue = "100") int size
     ) {
         House house = new House();
         house.setName(name);
