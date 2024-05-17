@@ -11,6 +11,5 @@ import java.util.List;
 
 @Repository
 public interface ITypeRoomRepo extends JpaRepository<TypeRoom,Integer>, JpaSpecificationExecutor<TypeRoom> {
-//    @Query("select  t.name  from  Room as r inner join TypeRoom as t on r.id=t.room.id")
-//    List<TypeRoom> findAllType();
+   
  }
