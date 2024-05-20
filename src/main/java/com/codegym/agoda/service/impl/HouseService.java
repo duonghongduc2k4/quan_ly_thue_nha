@@ -7,6 +7,7 @@ import com.codegym.agoda.dto.RoomDto;
 import com.codegym.agoda.model.*;
 import com.codegym.agoda.repository.*;
 import com.codegym.agoda.service.IHouseService;
+import org.hibernate.mapping.Array;
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -81,12 +83,6 @@ public class HouseService implements IHouseService {
 
         for (RoomDto roomDto : houseDto.getRooms()) {
             Room room = new Room();
-            if (houseDto.getId() != 0) {
-                Iterable<Room> roomList = iRoomRepo.findAllByIdHouse(houseDto.getId());
-                for (Room room1 : roomList) {
-                    iRoomRepo.deleteById(room1.getId());
-                }
-            }
             room.setName(roomDto.getName());
 //            lấy id thằng typeRoom
             room.setTypeRoom(iTypeRoomRepo.findById(roomDto.getTypeId()).get());

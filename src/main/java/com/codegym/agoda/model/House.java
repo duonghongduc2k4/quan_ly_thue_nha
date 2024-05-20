@@ -31,8 +31,6 @@ public class House {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "id_account")
-    @JsonIgnore
     private Account account;
 
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)

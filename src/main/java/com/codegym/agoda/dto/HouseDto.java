@@ -49,8 +49,8 @@ public class HouseDto {
         return rooms;
     }
 
-    public void setRooms(List<RoomDto> roomDtos) {
-        this.rooms = roomDtos;
+    public void setRooms(List<RoomDto> roomDto) {
+        this.rooms = roomDto;
     }
 
     public HouseDto() {

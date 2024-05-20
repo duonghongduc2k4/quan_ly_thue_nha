@@ -4,8 +4,10 @@ import com.codegym.agoda.dto.HouseDto;
 import com.codegym.agoda.dto.PaginateRequest;
 import com.codegym.agoda.model.House;
 import com.codegym.agoda.model.Image;
+import com.codegym.agoda.model.Room;
 import com.codegym.agoda.model.TypeRoom;
 import com.codegym.agoda.repository.IImageRepo;
+import com.codegym.agoda.repository.IRoomRepo;
 import com.codegym.agoda.repository.ITypeRoomRepo;
 import com.codegym.agoda.service.impl.HouseService;
 import com.codegym.agoda.service.impl.TypeRoomService;
@@ -30,6 +32,8 @@ public class HouseController {
     private HouseService houseService;
     @Autowired
     private IImageRepo iImageRepo;
+    @Autowired
+    private IRoomRepo iRoomRepo;
 
 
     @Value("${file-upload}")
@@ -86,6 +90,10 @@ public class HouseController {
             house.setNumberOfBedRoom(dto.getNumberOfBedRoom());
             house.setNumberOfBathRoom(dto.getNumberOfBathRoom());
 
+            Iterable<Room> roomList = iRoomRepo.findAllByIdHouse(dto.getId());
+            for (Room room1 : roomList) {
+                iRoomRepo.deleteById(room1.getId());
+            }
             List<Image> images = iImageRepo.findByIdHouse(id);
             for (Image img : images) {
                 iImageRepo.delete(img);
