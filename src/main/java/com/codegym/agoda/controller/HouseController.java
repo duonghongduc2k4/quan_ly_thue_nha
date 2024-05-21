@@ -2,10 +2,7 @@ package com.codegym.agoda.controller;
 
 import com.codegym.agoda.dto.HouseDto;
 import com.codegym.agoda.dto.PaginateRequest;
-import com.codegym.agoda.model.House;
-import com.codegym.agoda.model.Image;
-import com.codegym.agoda.model.Room;
-import com.codegym.agoda.model.TypeRoom;
+import com.codegym.agoda.model.*;
 import com.codegym.agoda.repository.IImageRepo;
 import com.codegym.agoda.repository.IRoomRepo;
 import com.codegym.agoda.repository.ITypeRoomRepo;
