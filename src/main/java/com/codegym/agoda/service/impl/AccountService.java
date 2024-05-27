@@ -15,7 +15,7 @@ public class AccountService {
     public Account checkAccount(Account account){
         List<Account> accountList = iAccountRepo.findAll();
         for (Account acc : accountList){
-            if (account.getUserName().equals(acc.getUserName()) && account.getPassword().equals(acc.getPassword())){
+            if (account.getUsername().equals(acc.getUsername()) && account.getPassword().equals(acc.getPassword())){
                 return acc;
             }
         }

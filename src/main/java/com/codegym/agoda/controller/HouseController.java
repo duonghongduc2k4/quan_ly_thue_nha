@@ -3,6 +3,7 @@ package com.codegym.agoda.controller;
 import com.codegym.agoda.dto.HouseDto;
 import com.codegym.agoda.dto.PaginateRequest;
 import com.codegym.agoda.model.*;
+import com.codegym.agoda.repository.IHouseRepository;
 import com.codegym.agoda.repository.IImageRepo;
 import com.codegym.agoda.repository.IRoomRepo;
 import com.codegym.agoda.repository.ITypeRoomRepo;
@@ -31,6 +32,7 @@ public class HouseController {
     private IImageRepo iImageRepo;
     @Autowired
     private IRoomRepo iRoomRepo;
+
 
 
     @Value("${file-upload}")
