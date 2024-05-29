@@ -6,6 +6,7 @@ import com.codegym.agoda.model.HouseAccount;
 import com.codegym.agoda.repository.IAccountRepo;
 import com.codegym.agoda.repository.IHouseRepository;
 import com.codegym.agoda.repository.IOrderRepository;
+import com.codegym.agoda.repository.IStatusRepo;
 import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,8 @@ public class OrderService {
 
     @Autowired
     private IHouseRepository iHouseRepository;
+    @Autowired
+    private IStatusRepo iStatusRepo;
 
     public List<HouseAccount> findAllHistory(int id) {
         return iOrderRepository.findAllHistory(id);
@@ -53,14 +56,13 @@ public class OrderService {
         }
 
 
-        SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH);
+        SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         SimpleDateFormat start = new SimpleDateFormat("HH", Locale.ENGLISH);
         SimpleDateFormat end = new SimpleDateFormat("mm", Locale.ENGLISH);
 
         String dateStart = dateOnlyFormat.format(str);
         String dateEnd = dateOnlyFormat.format(ed);
 
-        orderDto.setStatus("Chờ nhận phòng");
         orderDto.setTimeStart(dateStart);
         orderDto.setTimeEnd(dateEnd);
 
@@ -68,6 +70,7 @@ public class OrderService {
         HouseAccount houseAccount = orderDto.toHouseAccount();
         houseAccount.setAccount(iAccountRepo.findById(orderDto.getIdAccount()).get());
         houseAccount.setHouse(iHouseRepository.findById(orderDto.getIdHouse()).get());
+        houseAccount.setStatus(iStatusRepo.findById(3).get());
 
         houseAccount = iOrderRepository.save(houseAccount);
 

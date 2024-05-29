@@ -13,7 +13,6 @@ public class HouseAccount {
     private String timeStart;
     private String timeEnd;
     private String total ;
-    private String status;
 
     @ManyToOne
     @JoinColumn(name = "house_id")
@@ -23,5 +22,7 @@ public class HouseAccount {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @ManyToOne
+    private Status status;
 
 }

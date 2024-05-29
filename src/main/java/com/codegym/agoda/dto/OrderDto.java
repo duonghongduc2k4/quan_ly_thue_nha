@@ -12,7 +12,7 @@ public class OrderDto {
     private String timeStart;
     private String timeEnd;
     private String total ;
-    private String status;
+    private int status_id;
     private int idHouse;
     private int idAccount;
 
@@ -32,12 +32,12 @@ public class OrderDto {
         this.idHouse = idHouse;
     }
 
-    public String getStatus() {
-        return status;
+    public int getStatus_id() {
+        return status_id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus_id(int status_id) {
+        this.status_id = status_id;
     }
 
     public String getTotal() {
@@ -77,7 +77,7 @@ public class OrderDto {
         houseAccount.setTimeStart(timeStart);
         houseAccount.setTimeEnd(timeEnd);
         houseAccount.setTotal(total);
-        houseAccount.setStatus(status);
+//        houseAccount.setStatus(status);
         return houseAccount;
     }
 
@@ -85,7 +85,7 @@ public class OrderDto {
     public Date getStartTime() throws ParseException {
         // ngày bắt đầu
         String str = date.split("--")[0].trim();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-DD");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse(str);
         return date;
     }
@@ -93,7 +93,7 @@ public class OrderDto {
     public Date getEndTime() throws ParseException {
         // ngày kết thúc
         String str = date.split("--")[1].trim();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-DD");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse(str);
         return date;
     }
