@@ -15,6 +15,19 @@ public class OrderDto {
     private int status_id;
     private int idHouse;
     private int idAccount;
+    private String revenue;
+
+    public int getRevenue() {
+        if (revenue == null || revenue.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(revenue);
+    }
+
+    public OrderDto setRevenue(String revenue) {
+        this.revenue = revenue;
+        return this;
+    }
 
     public int getIdAccount() {
         return idAccount;
@@ -40,12 +53,16 @@ public class OrderDto {
         this.status_id = status_id;
     }
 
-    public String getTotal() {
-        return total;
+    public int getTotal() {
+        if (total == null || total.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(total);
     }
 
-    public void setTotal(String total) {
+    public OrderDto setTotal(String total) {
         this.total = total;
+        return this;
     }
 
     public String getTimeEnd() {
@@ -76,7 +93,6 @@ public class OrderDto {
         HouseAccount houseAccount = new HouseAccount();
         houseAccount.setTimeStart(timeStart);
         houseAccount.setTimeEnd(timeEnd);
-        houseAccount.setTotal(total);
 //        houseAccount.setStatus(status);
         return houseAccount;
     }

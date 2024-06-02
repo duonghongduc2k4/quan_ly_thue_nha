@@ -1,15 +1,14 @@
 package com.codegym.agoda.dto;
 
-import com.codegym.agoda.model.Account;
-import com.codegym.agoda.model.House;
-import com.codegym.agoda.model.Room;
-import com.codegym.agoda.model.TypeRoom;
+import com.codegym.agoda.model.*;
 import com.codegym.agoda.repository.IAccountRepo;
+import com.codegym.agoda.repository.IStatusRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 public class HouseDto {
 
@@ -18,14 +17,53 @@ public class HouseDto {
     private String address;
     private String description;
     private double price;
-    private int numberOfBedRoom;
-    private int numberOfBathRoom;
+    private String numberOfBedRoom;
+    private String numberOfBathRoom;
     //doanh thu
     private List<RoomDto> rooms;
     private double revenue;
 
     private int accountId;
 
+    private String priceForm;
+    private String priceTo;
+    private String status;
+
+    public int getStatus() {
+        if (status == null || status.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(status);
+    }
+
+    public HouseDto setStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public int getPriceForm() {
+        if (priceForm == null || priceForm.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(priceForm);
+    }
+
+    public HouseDto setPriceForm(String priceForm) {
+        this.priceForm = priceForm;
+        return this;
+    }
+
+    public int getPriceTo() {
+        if (priceTo == null || priceTo.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(priceTo);
+    }
+
+    public HouseDto setPriceTo(String priceTo) {
+        this.priceTo = priceTo;
+        return this;
+    }
 
     public int getAccountId() {
         return accountId;
@@ -63,9 +101,9 @@ public class HouseDto {
         house.setAddress(address);
         house.setDescription(description);
         house.setPrice(price);
-        house.setNumberOfBedRoom(numberOfBedRoom);
-        house.setNumberOfBathRoom(numberOfBathRoom);
         house.setRevenue(revenue);
+        house.setNumberOfBedRoom(getNumberOfBedRoom());
+        house.setNumberOfBathRoom(getNumberOfBathRoom());
         return house;
 
     }
@@ -76,8 +114,6 @@ public class HouseDto {
         this.address = address;
         this.description = description;
         this.price = price;
-        this.numberOfBedRoom = numberOfBedRoom;
-        this.numberOfBathRoom = numberOfBathRoom;
         this.revenue = revenue;
     }
 
@@ -93,16 +129,18 @@ public class HouseDto {
         return name;
     }
 
-    public void setName(String name) {
+    public HouseDto setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public HouseDto setAddress(String address) {
         this.address = address;
+        return this;
     }
 
     public String getDescription() {
@@ -122,19 +160,27 @@ public class HouseDto {
     }
 
     public int getNumberOfBedRoom() {
-        return numberOfBedRoom;
+        if (numberOfBedRoom == null || numberOfBedRoom.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(numberOfBedRoom);
     }
 
-    public void setNumberOfBedRoom(int numberOfBedRoom) {
+    public HouseDto setNumberOfBedRoom(String numberOfBedRoom) {
         this.numberOfBedRoom = numberOfBedRoom;
+        return this;
     }
 
     public int getNumberOfBathRoom() {
-        return numberOfBathRoom;
+        if (numberOfBathRoom == null || numberOfBathRoom.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(numberOfBathRoom);
     }
 
-    public void setNumberOfBathRoom(int numberOfBathRoom) {
+    public HouseDto setNumberOfBathRoom(String numberOfBathRoom) {
         this.numberOfBathRoom = numberOfBathRoom;
+        return this;
     }
 
     public double getRevenue() {

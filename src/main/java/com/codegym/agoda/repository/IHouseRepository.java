@@ -10,6 +10,4 @@ import java.util.List;
 
 @Repository
 public interface IHouseRepository extends JpaRepository<House,Integer>, JpaSpecificationExecutor<House> {
-    @Query("from House as h where h.account.id = ?1")
-    List<House> findAllByIdAccount(int id);
 }

@@ -41,13 +41,26 @@ public class HouseController {
     @GetMapping
     public ResponseEntity<List<House>> listHouse(
             @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "address", required = false) String address,
+            @RequestParam(name = "numberOfBedRoom", required = false) String numberOfBedRoom,
+            @RequestParam(name = "numberOfBathRoom", required = false) String numberOfBathRoom,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "priceFrom", required = false) String priceFrom,
+            @RequestParam(name = "priceTo", required = false) String priceTo,
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
             @RequestParam(name = "size", required = false, defaultValue = "100") int size
     ) {
-        House house = new House();
-        house.setName(name);
+        HouseDto dto = new HouseDto()
+                .setName(name)
+                .setAddress(address)
+                .setNumberOfBedRoom(numberOfBedRoom)
+                .setNumberOfBathRoom(numberOfBathRoom)
+                .setStatus(status)
+                .setPriceForm(priceFrom)
+                .setPriceTo(priceTo)
+                ;
         PaginateRequest paginateRequest = new PaginateRequest(page, size);
-        Page<House> pages = houseService.findAll(house, paginateRequest);
+        Page<House> pages = houseService.findAll(dto, paginateRequest);
         return new ResponseEntity<>(pages.getContent(), HttpStatus.OK);
     }
 

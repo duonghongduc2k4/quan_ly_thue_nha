@@ -11,4 +11,9 @@ import java.util.List;
 public interface IOrderRepository extends JpaRepository<HouseAccount,Integer> {
     @Query("from HouseAccount as h where h.account.id = ?1")
     List<HouseAccount> findAllHistory(int id);
+
+    @Query("from HouseAccount  as h where h.house.account.id = ?1")
+    List<HouseAccount> findAllByIdHost(int id);
+
+
 }

@@ -12,7 +12,8 @@ public class HouseAccount {
     private int id ;
     private String timeStart;
     private String timeEnd;
-    private String total ;
+    private int total ;
+    private int revenue;
 
     @ManyToOne
     @JoinColumn(name = "house_id")

@@ -34,10 +34,18 @@ public class OrderService {
     @Autowired
     private IStatusRepo iStatusRepo;
 
+
     public List<HouseAccount> findAllHistory(int id) {
         return iOrderRepository.findAllHistory(id);
     }
 
+    public List<HouseAccount> findAllByIdHost(int id) {
+        return iOrderRepository.findAllByIdHost(id);
+    }
+    public HouseAccount checkStatus(HouseAccount houseAccount){
+        houseAccount.setStatus(iStatusRepo.findById(6).get());
+        return iOrderRepository.save(houseAccount);
+    }
 
     public HouseAccount saveOrder(OrderDto orderDto) throws ParseException {
 
@@ -52,6 +60,7 @@ public class OrderService {
         // check ngày xem đặt ngày ở quá khứ
         boolean dated = localDate.isBefore(dateNow);
         if (dated) {
+            return null;
             // ngày đặt không hợp lệ
         }
 
@@ -71,6 +80,9 @@ public class OrderService {
         houseAccount.setAccount(iAccountRepo.findById(orderDto.getIdAccount()).get());
         houseAccount.setHouse(iHouseRepository.findById(orderDto.getIdHouse()).get());
         houseAccount.setStatus(iStatusRepo.findById(3).get());
+
+        House house = iHouseRepository.findById(orderDto.getIdHouse()).get();
+        house.setStatus(iStatusRepo.findById(3).get());
 
         houseAccount = iOrderRepository.save(houseAccount);
 

@@ -10,6 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IHouseService extends IGenerateService<House>{
-    Page<House> findAll(House house, PaginateRequest paginateRequest);
+    Page<House> findAll(HouseDto house, PaginateRequest paginateRequest);
     House saveHouse(HouseDto houseDto) throws IOException;
 }

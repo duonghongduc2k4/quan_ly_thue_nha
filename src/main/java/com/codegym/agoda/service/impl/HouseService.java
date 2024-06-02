@@ -63,8 +63,8 @@ public class HouseService implements IHouseService {
     }
 
     @Override
-    public Page<House> findAll(House house, PaginateRequest paginateRequest) {
-        Specification<House> specification = new HouseSpec(house);
+    public Page<House> findAll(HouseDto dto, PaginateRequest paginateRequest) {
+        Specification<House> specification = new HouseSpec(dto);
         Pageable pageable = PageRequest.of(paginateRequest.getPage(), paginateRequest.getSize());
         return iHouseRepository.findAll(specification, pageable);
     }
