@@ -1,5 +1,6 @@
 package com.codegym.agoda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,13 +22,18 @@ public class House {
     //doanh thu
     private double revenue;
 
-    @OneToMany(mappedBy = "house")
-    private List<HouseRoom> houseRooms;
+    private int numberOfRoom;
+
+    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
+    private List<Room> rooms;
+
+    @ManyToOne
+    private Status status;
+
+    @ManyToOne
+    private Account account;
 
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
     private List<Image> images;
-
-    @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
-    private List<Status> statuses;
 
 }
