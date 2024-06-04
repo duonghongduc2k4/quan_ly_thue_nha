@@ -8,6 +8,7 @@ import com.codegym.agoda.repository.IAccountRepo;
 import com.codegym.agoda.repository.IHouseRepository;
 import com.codegym.agoda.repository.IOrderRepository;
 import com.codegym.agoda.repository.IStatusRepo;
+import com.codegym.agoda.service.impl.HouseService;
 import com.codegym.agoda.service.impl.OrderService;
 import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class OrderController {
     private IHouseRepository iHouseRepository;
     @Autowired
     private IAccountRepo iAccountRepo;
+    @Autowired
+    private HouseService houseService;
     @PostMapping()
     public ResponseEntity<HouseAccount> saveOrder(@RequestBody OrderDto orderDto) throws ParseException {
         return new ResponseEntity<>(orderService.saveOrder(orderDto), HttpStatus.OK);
@@ -64,5 +67,32 @@ public class OrderController {
         houseAccount1.setAccount(iAccountRepo.findById(dto.getIdAccount()).get());
         orderService.checkStatus(houseAccount1);
         return new ResponseEntity<>(houseAccount1, HttpStatus.OK);
+    }
+    @PutMapping("yes/{id}")
+    public ResponseEntity<HouseAccount> updateOrder(@RequestBody OrderDto orderDto, @PathVariable int id) {
+        System.out.println(orderDto.getTotal());
+
+        if (orderDto.getTotal() == 1) {
+            Optional<HouseAccount> houseAccount1 = iOrderRepository.findById(orderDto.getId());
+            houseAccount1.get().setStatus(iStatusRepo.findById(2).get());
+            iOrderRepository.save(houseAccount1.get());
+
+            House house = houseService.findById(houseAccount1.get().getId()).get();
+            house.setStatus(iStatusRepo.findById(2).get());
+            houseService.save(house);
+
+            return new ResponseEntity<>(houseAccount1.get(), HttpStatus.OK);
+        } else {
+            Optional<HouseAccount> houseAccount2 = iOrderRepository.findById(orderDto.getId());
+            houseAccount2.get().setStatus(iStatusRepo.findById(5).get());
+            iOrderRepository.save(houseAccount2.get());
+
+            House house = houseService.findById(houseAccount2.get().getId()).get();
+            house.setStatus(iStatusRepo.findById(3).get());
+            houseService.save(house);
+
+
+            return new ResponseEntity<>(houseAccount2.get(), HttpStatus.OK);
+        }
     }
 }

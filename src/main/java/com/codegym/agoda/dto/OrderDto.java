@@ -7,11 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class OrderDto {
-
+    private int id;
     private String date;
     private String timeStart;
     private String timeEnd;
-    private String total ;
+    private String total;
     private int status_id;
     private int idHouse;
     private int idAccount;
@@ -27,6 +27,14 @@ public class OrderDto {
     public OrderDto setRevenue(String revenue) {
         this.revenue = revenue;
         return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdAccount() {
@@ -91,9 +99,11 @@ public class OrderDto {
 
     public HouseAccount toHouseAccount() {
         HouseAccount houseAccount = new HouseAccount();
+        houseAccount.setId(id);
         houseAccount.setTimeStart(timeStart);
         houseAccount.setTimeEnd(timeEnd);
-//        houseAccount.setStatus(status);
+        houseAccount.setRevenue(getRevenue());
+        houseAccount.setTotal(getTotal());
         return houseAccount;
     }
 
