@@ -66,7 +66,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HouseAccount> updateStatus(@RequestBody OrderDto dto,@PathVariable int id){
+    public ResponseEntity<HouseAccount> updateStatus(@RequestBody OrderDto dto, @PathVariable int id){
         HouseAccount houseAccount1=iOrderRepository.findById(id).get();
         houseAccount1.setTimeEnd(dto.getTimeEnd());
         houseAccount1.setTimeStart(dto.getTimeStart());
