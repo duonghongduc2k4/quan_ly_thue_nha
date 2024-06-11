@@ -48,6 +48,14 @@ public class OrderController {
         }
         return new ResponseEntity<>(houseAccounts, HttpStatus.OK);
     }
+    @GetMapping("/time/{id}")
+    public ResponseEntity<List<HouseAccount>> findTimes(@PathVariable int id) {
+        List<HouseAccount> houseAccounts = orderService.findTimes(id);
+        if (houseAccounts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(houseAccounts, HttpStatus.OK);
+    }
     @GetMapping("/host/{id}")
     public ResponseEntity<List<HouseAccount>> findById(@PathVariable int id) {
         List<HouseAccount> houseAccounts = orderService.findAllByIdHost(id);
@@ -68,31 +76,28 @@ public class OrderController {
         orderService.checkStatus(houseAccount1);
         return new ResponseEntity<>(houseAccount1, HttpStatus.OK);
     }
-    @PutMapping("yes/{id}")
+    @PutMapping("/yes/{id}")
     public ResponseEntity<HouseAccount> updateOrder(@RequestBody OrderDto orderDto, @PathVariable int id) {
-        System.out.println(orderDto.getTotal());
 
         if (orderDto.getTotal() == 1) {
-            Optional<HouseAccount> houseAccount1 = iOrderRepository.findById(orderDto.getId());
-            houseAccount1.get().setStatus(iStatusRepo.findById(2).get());
-            iOrderRepository.save(houseAccount1.get());
+            HouseAccount houseAccount1 = iOrderRepository.findById(orderDto.getId()).get();
+            houseAccount1.setStatus(iStatusRepo.findById(2).get());
+            iOrderRepository.save(houseAccount1);
 
-            House house = houseService.findById(houseAccount1.get().getId()).get();
+            House house = houseService.findById(houseAccount1.getHouse().getId()).get();
             house.setStatus(iStatusRepo.findById(2).get());
             houseService.save(house);
 
-            return new ResponseEntity<>(houseAccount1.get(), HttpStatus.OK);
+            return new ResponseEntity<>(houseAccount1, HttpStatus.OK);
         } else {
-            Optional<HouseAccount> houseAccount2 = iOrderRepository.findById(orderDto.getId());
-            houseAccount2.get().setStatus(iStatusRepo.findById(5).get());
-            iOrderRepository.save(houseAccount2.get());
-
-            House house = houseService.findById(houseAccount2.get().getId()).get();
-            house.setStatus(iStatusRepo.findById(3).get());
+            HouseAccount houseAccount2 = iOrderRepository.findById(orderDto.getId()).get();
+           iOrderRepository
+                   .delete(houseAccount2);
+            House house = houseService.findById(houseAccount2.getHouse().getId()).get();
+            house.setStatus(iStatusRepo.findById(5).get());
             houseService.save(house);
 
-
-            return new ResponseEntity<>(houseAccount2.get(), HttpStatus.OK);
+            return new ResponseEntity<>(houseAccount2, HttpStatus.OK);
         }
     }
 }

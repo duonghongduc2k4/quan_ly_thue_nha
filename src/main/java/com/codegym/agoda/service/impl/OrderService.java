@@ -34,7 +34,9 @@ public class OrderService {
     @Autowired
     private IStatusRepo iStatusRepo;
 
-
+    public List<HouseAccount> findTimes (int id) {
+    return iOrderRepository.findTimes(id);
+    }
     public List<HouseAccount> findAllHistory(int id) {
         return iOrderRepository.findAllHistory(id);
     }
