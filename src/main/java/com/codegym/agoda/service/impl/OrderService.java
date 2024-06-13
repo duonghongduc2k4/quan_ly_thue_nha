@@ -84,7 +84,7 @@ public class OrderService {
         houseAccount.setStatus(iStatusRepo.findById(3).get());
 
         House house = iHouseRepository.findById(orderDto.getIdHouse()).get();
-        house.setStatus(iStatusRepo.findById(3).get());
+        house.setStatus(iStatusRepo.findById(1).get());
 
         houseAccount = iOrderRepository.save(houseAccount);
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,7 @@ public class House {
     private double revenue;
 
     private int numberOfRoom;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
     private List<Room> rooms;

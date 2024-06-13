@@ -6,6 +6,7 @@ import com.codegym.agoda.repository.IStatusRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -28,6 +29,7 @@ public class HouseDto {
     private String priceForm;
     private String priceTo;
     private String status;
+    private LocalDateTime createdAt;
 
     public int getStatus() {
         if (status == null || status.isEmpty()) {
@@ -104,10 +106,18 @@ public class HouseDto {
         house.setRevenue(revenue);
         house.setNumberOfBedRoom(getNumberOfBedRoom());
         house.setNumberOfBathRoom(getNumberOfBathRoom());
+        house.setCreatedAt(createdAt);
         return house;
 
     }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
+    public HouseDto setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
     public HouseDto(int id, String name, String address, String description, double price, int numberOfBedRoom, int numberOfBathRoom, double revenue) {
         this.id = id;
         this.name = name;
