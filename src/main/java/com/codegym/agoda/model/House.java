@@ -23,7 +23,6 @@ public class House {
     //doanh thu
     private double revenue;
 
-    private int numberOfRoom;
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)

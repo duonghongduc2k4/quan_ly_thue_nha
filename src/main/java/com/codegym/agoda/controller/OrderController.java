@@ -96,12 +96,9 @@ public class OrderController {
             return new ResponseEntity<>(houseAccount1, HttpStatus.OK);
         } else {
             HouseAccount houseAccount2 = iOrderRepository.findById(orderDto.getId()).get();
-            houseAccount2.setStatus(iStatusRepo.findById(1).get());
+            houseAccount2.setStatus(iStatusRepo.findById(5).get());
             iOrderRepository.save(houseAccount2);
 
-            House house = houseService.findById(houseAccount2.getHouse().getId()).get();
-            house.setStatus(iStatusRepo.findById(1).get());
-            houseService.save(house);
 
             return new ResponseEntity<>(houseAccount2, HttpStatus.OK);
         }
