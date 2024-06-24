@@ -120,7 +120,6 @@ public class HouseController {
     public ResponseEntity<Void> deleteResource(@PathVariable int id) {
         // Xử lý logic xóa tài nguyên ở đây
         houseService.deleteHouse(id);
-
         return new ResponseEntity<>( HttpStatus.OK);
     }
 }
